@@ -11,14 +11,13 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class Now extends Activity {
     private Context context;
     private Boolean questionBoolean;
     private TextView question;
-    private int questionNum=0;
-
-    private LinkedHashMap<String, Boolean> questions=new LinkedHashMap<String, Boolean>();
+    private HashMap<String, Boolean> questions=new HashMap<String, Boolean>();
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -27,13 +26,18 @@ public class Now extends Activity {
         setQuestions();
         context = getApplicationContext();
         question = findViewById(R.id.text_question);
-        nextQuestion(0);
+        nextRandomQuestion();
     }
 
-    public void nextQuestion(int number){
-        //CharSequence text = (CharSequence)getElementByIndex(questions, number);
-        question.setText((CharSequence)(questions.keySet().toArray())[ number ] );
-        questionBoolean = questions.get( (questions.values().toArray())[ number ] );
+    public void nextRandomQuestion(){
+        Random generator = new Random();
+        Object[] values = questions.values().toArray();
+        Object[] keys = questions.keySet().toArray();
+        generator.nextInt(questions.size());    // number
+        Object randomValue = values[generator.nextInt(values.length)];
+        Object randomKey = keys[generator.nextInt(values.length)];
+        question.setText((String)randomKey);
+        questionBoolean = (Boolean)randomValue;
     }
 
     private void setQuestions(){
@@ -66,11 +70,6 @@ public class Now extends Activity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-        questionNum ++;
-        nextQuestion(questionNum);
-    }
-
-    private Object getElementByIndex(LinkedHashMap map,int index){
-        return map.get( (map.keySet().toArray())[ index ] );
+        nextRandomQuestion();
     }
 }
