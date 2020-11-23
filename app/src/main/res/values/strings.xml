@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NowRedux</string>
+    <string name="question">Question</string>
+    //Buttons
+    <string name="button_false">False</string>
+    <string name="button_true">True</string>
+    <string name="button_previous">Previous</string>
+    <string name="button_next">Next</string>
+</resources>
